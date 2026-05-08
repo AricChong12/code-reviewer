@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- Character encoding for all languages/symbols -->
+    <meta charset="UTF-8">
+    <!-- Makes page responsive on mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Page title shown in browser tab -->
+    <title>CODE REVIEW // GEMINI</title>
+     <!-- External CSS file (Flask static file system) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Markdown parser library (converts markdown → HTML) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <!-- Main centered container -->
+    <div class="container">
+         <!-- Big stylized heading -->
+        <h1>Review<br>Your<br>Code.</h1>
+        
+        <!-- Input section wrapper -->
+        <div class="input-section">
+            <!-- Code input box -->
+            <textarea id="code-input" placeholder="// PASTE CODE HERE"></textarea>
+            <!-- Button wrapper (keeps button aligned left) -->
+            <div style="display: flex; justify-content: flex-start;">
+                <!-- Button triggers JS function -->
+                <button id="submit-btn" onclick="submitCode()">Analyze Now</button>
+            </div>
+        </div>
+        <!-- Output / AI feedback area (hidden initially) -->
+        <div id="feedback" class="feedback" style="display:none;"></div>
+    </div>
+
+    <script>
+        function submitCode() {
+            // Get feedback output box
+            const feedbackBox = document.getElementById('feedback');
+            // Get button element
+            const btn = document.getElementById('submit-btn');
+            // Get user input from textarea
+            const code = document.getElementById('code-input').value;
+            
+            // Prevent empty submissions
+            if(!code.trim()) return;
+
+            // UI state: show loading
+            btn.innerText = "THINKING...";
+            feedbackBox.style.display = "block";
+            feedbackBox.innerHTML = "<h2>Gemini is hunting bugs...</h2>";
+
+            // Send code to backend API endpoint (/review)
+            fetch('/review', {
+                method: 'POST',
+                // tell server we are sending JSON
+                headers: { 'Content-Type': 'application/json' },
+                // send user code as JSON body
+                body: JSON.stringify({ code }),
+            })
+            // convert response to JSON
+            .then(response => response.json())
+            // handle server response
+            .then(data => {
+                // reset button text
+                btn.innerText = "Analyze Now";
+                // if feedback exists, render markdown → HTML
+                if(data.feedback) {
+                    feedbackBox.innerHTML = marked.parse(data.feedback);
+                } else {
+                    // otherwise show error message
+                    feedbackBox.innerHTML = "<h3>Error: " + data.error + "</h3>";
+                }
+            })
+            // handle network / server failure
+            .catch(() => {
+                btn.innerText = "Analyze Now";
+                feedbackBox.innerHTML = "<h3>Connection Failed.</h3>";
+            });
+        }
+    </script>
+</body>
+</html>

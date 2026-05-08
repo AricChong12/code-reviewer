@@ -1,0 +1,137 @@
+:root {
+    /* Global variables (easy theme control) */
+    --bg: #ffffff;          /* background color */
+    --accent: #000000;      /* main text/border color */
+    --primary: #FF3E00;     /* accent button color */
+    --border-width: 4px;    /* consistent border thickness */
+}
+
+body {
+    background-color: var(--bg);  /* page background */
+    color: var(--accent);         /* default text color */
+    font-family: 'Inter', sans-serif; /* clean modern font */
+    margin: 0;                     /* remove default spacing */
+
+    /* center container horizontally */
+    display: flex;
+    justify-content: center;
+
+    /* spacing around page edges */
+    padding: 20px; 
+}
+
+.container {
+    width: 100%;          /* full width up to max */
+    max-width: 700px;     /* prevents it from getting too wide */
+
+    /* thick border frame look */
+    border: var(--border-width) solid var(--accent);
+
+    /* responsive padding (shrinks/grows smoothly) */
+    padding: clamp(10px, 2vw, 60px); 
+
+    /* retro “offset shadow” effect */
+    box-shadow: 15px 15px 0px var(--accent);
+
+    background: white;     /* container background */
+    box-sizing: border-box; /* includes padding in width */
+}
+
+h1 {
+    font-size: clamp(2.5rem, 5vw, 5rem); /* responsive heading size */
+    font-weight: 900;                  /* extra bold */
+    text-transform: uppercase;         /* ALL CAPS style */
+    line-height: 0.9;                  /* tight vertical spacing */
+    margin-bottom: 30px;               /* space below heading */
+    letter-spacing: -2px;              /* tight letter spacing for style */
+}
+
+button {
+    /* orange/red button */
+    background: var(--primary);
+    /* button text color */
+    color: white;
+    /* thick outline */
+    border: var(--border-width) solid var(--accent);
+    
+    /* clickable area size */
+    padding: 15px 30px;
+    /* readable button text */
+    font-size: 1.2rem; 
+    /* bold text */
+    font-weight: 900;
+    /* strong UI style */
+    text-transform: uppercase;
+    /* spaced letters */
+    letter-spacing: 1px;
+    
+     /* pointer cursor on hover */
+
+    cursor: pointer;
+    /* 3D lifted effect */
+    box-shadow: 6px 6px 0px var(--accent);
+    /* smooth hover animation */
+    transition: all 0.1s ease;
+    
+    /* Layout */
+    /* spacing above button */
+    margin-top: 20px;
+    /* size fits text */
+    width: fit-content; 
+
+}
+
+button:hover {
+    /* slight lift animation */
+    transform: translate(-2px, -2px);
+    /* deeper shadow on hover */
+    box-shadow: 8px 8px 0px var(--accent);
+    /* visual feedback: invert color */
+    background: var(--accent); /* Switches to black on hover */
+}
+
+button:active {
+     /* pressed-down effect */
+    transform: translate(6px, 6px);
+    box-shadow: 0px 0px 0px var(--accent);
+}
+
+button:disabled {
+     /* disabled state styling */
+    background: #e0e0e0;
+    color: #999;
+    cursor: not-allowed;
+    /* remove interaction effects */
+    transform: none;
+    box-shadow: none;
+}
+
+textarea {
+    /* full container width */
+    width: 100%;
+    /* responsive height */
+    height: clamp(200px, 30vh, 300px); 
+    /* consistent border */
+    border: var(--border-width) solid var(--accent);
+    /* inner spacing */
+    padding: 15px;
+    /* code-like font */
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    /* include padding in width */
+    box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+    /* tablet / smaller screen adjustments */
+    .container {
+        /* reduce padding */
+        padding: 30px; 
+        /* smaller shadow */
+        box-shadow: 10px 10px 0px var(--accent);
+    }
+    h1 {
+        /* slightly less tight for readability */
+        letter-spacing: -1px;
+    }
+}
