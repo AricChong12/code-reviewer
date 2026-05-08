@@ -1,5 +1,5 @@
 ## Code Reviewer
-By GDGoC USM
+By GDGoC USM Workshop
 
 
 Credits: https://github.com/SannLim11/AI-mentor
